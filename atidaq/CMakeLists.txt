@@ -4,7 +4,7 @@ ExternalProject_Add(
 	#GIT_TAG cmake-1.0.6
 	URL https://github.com/roboticslibrary/atidaq/archive/cmake-1.0.6.tar.gz
 	#URL ${CMAKE_CURRENT_SOURCE_DIR}/atidaq-cmake-1.0.6.tar.gz
-	URL_MD5 23efd8412e30a06e9c433ab5e7ed2e20
+	URL_MD5 ba4ceb0f980ae381497e22ee577ec4f6
 	CMAKE_ARGS
 		-DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
 		-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
