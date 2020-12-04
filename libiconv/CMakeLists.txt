@@ -5,7 +5,7 @@ ExternalProject_Add(
 	#GIT_TAG cmake-1.16
 	URL https://github.com/roboticslibrary/libiconv/archive/cmake-1.16.tar.gz
 	#URL ${CMAKE_CURRENT_SOURCE_DIR}/libiconv-cmake-1.16.tar.gz
-	URL_MD5 bad25db38c7e865c7a9a4e01b19f4fd4
+	URL_MD5 007454a1efd86d17d07302f0d9f26449
 	CMAKE_ARGS
 		-DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
 		-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
