@@ -1,10 +1,10 @@
 ExternalProject_Add(
 	eigen3
 	#GIT_REPOSITORY https://gitlab.com/libeigen/eigen.git
-	#GIT_TAG 3.3.8
-	URL https://gitlab.com/libeigen/eigen/-/archive/3.3.8/eigen-3.3.8.tar.gz
-	#URL ${CMAKE_CURRENT_SOURCE_DIR}/eigen-3.3.8.tar.gz
-	URL_MD5 dc352b8c98797c71470b58b52fa8a4ce
+	#GIT_TAG 3.3.9
+	URL https://gitlab.com/libeigen/eigen/-/archive/3.3.9/eigen-3.3.9.tar.gz
+	#URL ${CMAKE_CURRENT_SOURCE_DIR}/eigen-3.3.9.tar.gz
+	URL_MD5 609286804b0f79be622ccf7f9ff2b660
 	CMAKE_ARGS
 		-DBUILD_TESTING=OFF
 		-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
