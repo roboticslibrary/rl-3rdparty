@@ -1,10 +1,10 @@
 ExternalProject_Add(
 	zlib
 	#GIT_REPOSITORY https://github.com/roboticslibrary/zlib.git
-	#GIT_TAG zlib-1.2.11
+	#GIT_TAG cmake-1.2.11
 	URL https://github.com/roboticslibrary/zlib/archive/cmake-1.2.11.tar.gz
-	#URL ${CMAKE_CURRENT_SOURCE_DIR}/cmake-1.2.11.tar.gz
-	URL_MD5 c0e9d9c26dbd3e1270f5163cf25d588d
+	#URL ${CMAKE_CURRENT_SOURCE_DIR}/zlib-cmake-1.2.11.tar.gz
+	URL_MD5 6902c1522e9ed4717dffb368e250fe4f
 	CMAKE_ARGS
 		-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
 		-DCMAKE_CFG_INTDIR=${CMAKE_CFG_INTDIR}
