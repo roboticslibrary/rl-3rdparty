@@ -12,7 +12,7 @@ ExternalProject_Add(
 )
 
 ExternalProject_Add_Step(
-	boost license
-	DEPENDEES build
-	COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/LICENSE_1_0.txt ${CMAKE_INSTALL_FULL_DATADIR}/boost/LICENSE_1_0.txt
+	boost install-licenses
+	DEPENDEES install
+	COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/LICENSE_1_0.txt ${CMAKE_INSTALL_FULL_DATADIR}/licenses/boost/LICENSE_1_0.txt
 )

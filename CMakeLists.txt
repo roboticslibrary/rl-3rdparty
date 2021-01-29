@@ -32,31 +32,35 @@ add_subdirectory(libxml2)
 
 add_subdirectory(libxslt)
 
-set(
-	CPACK_INSTALL_CMAKE_PROJECTS
-	"${CMAKE_CURRENT_BINARY_DIR}/atidaq/atidaq-prefix/src/atidaq-build;atidaq;ALL;/"
-	"${CMAKE_CURRENT_BINARY_DIR}/bullet3/bullet3-prefix/src/bullet3-build;bullet3;ALL;/"
-	"${CMAKE_CURRENT_BINARY_DIR}/coin/coin-prefix/src/coin-build;coin;ALL;/"
-	"${CMAKE_CURRENT_BINARY_DIR}/eigen3/eigen3-prefix/src/eigen3-build;eigen3;ALL;/"
-	"${CMAKE_CURRENT_BINARY_DIR}/fcl/fcl-prefix/src/fcl-build;fcl;ALL;/"
-	"${CMAKE_CURRENT_BINARY_DIR}/libccd/libccd-prefix/src/libccd-build;libccd;ALL;/"
-	"${CMAKE_CURRENT_BINARY_DIR}/libiconv/libiconv-prefix/src/libiconv-build;libiconv;ALL;/"
-	"${CMAKE_CURRENT_BINARY_DIR}/libxml2/libxml2-prefix/src/libxml2-build;libxml2;ALL;/"
-	"${CMAKE_CURRENT_BINARY_DIR}/libxslt/libxslt-prefix/src/libxslt-build;libxslt;ALL;/"
-	"${CMAKE_CURRENT_BINARY_DIR}/nlopt/nlopt-prefix/src/nlopt-build;nlopt;ALL;/"
-	"${CMAKE_CURRENT_BINARY_DIR}/ode/ode-prefix/src/ode-build;ode;ALL;/"
-	"${CMAKE_CURRENT_BINARY_DIR}/pqp/pqp-prefix/src/pqp-build;pqp;ALL;/"
-	"${CMAKE_CURRENT_BINARY_DIR}/simage/simage-prefix/src/simage-build;simage;ALL;/"
-	"${CMAKE_CURRENT_BINARY_DIR}/solid3/solid3-prefix/src/solid3-build;solid3;ALL;/"
-	"${CMAKE_CURRENT_BINARY_DIR}/soqt/soqt-prefix/src/soqt-build;soqt;ALL;/"
-	"${CMAKE_CURRENT_BINARY_DIR}/xz/xz-prefix/src/xz-build;xz;ALL;/"
-	"${CMAKE_CURRENT_BINARY_DIR}/zlib/zlib-prefix/src/zlib-build;zlib;ALL;/"
-)
+if(NOT DEFINED CPACK_INSTALL_CMAKE_PROJECTS)
+	set(
+		CPACK_INSTALL_CMAKE_PROJECTS
+		${CMAKE_CURRENT_BINARY_DIR}/atidaq/atidaq-prefix/src/atidaq-build atidaq ALL /
+		${CMAKE_CURRENT_BINARY_DIR}/bullet3/bullet3-prefix/src/bullet3-build bullet3 ALL /
+		${CMAKE_CURRENT_BINARY_DIR}/coin/coin-prefix/src/coin-build coin ALL /
+		${CMAKE_CURRENT_BINARY_DIR}/eigen3/eigen3-prefix/src/eigen3-build eigen3 ALL /
+		${CMAKE_CURRENT_BINARY_DIR}/fcl/fcl-prefix/src/fcl-build fcl ALL /
+		${CMAKE_CURRENT_BINARY_DIR}/libccd/libccd-prefix/src/libccd-build libccd ALL /
+		${CMAKE_CURRENT_BINARY_DIR}/libiconv/libiconv-prefix/src/libiconv-build libiconv ALL /
+		${CMAKE_CURRENT_BINARY_DIR}/libxml2/libxml2-prefix/src/libxml2-build libxml2 ALL /
+		${CMAKE_CURRENT_BINARY_DIR}/libxslt/libxslt-prefix/src/libxslt-build libxslt ALL /
+		${CMAKE_CURRENT_BINARY_DIR}/nlopt/nlopt-prefix/src/nlopt-build nlopt ALL /
+		${CMAKE_CURRENT_BINARY_DIR}/ode/ode-prefix/src/ode-build ode ALL /
+		${CMAKE_CURRENT_BINARY_DIR}/pqp/pqp-prefix/src/pqp-build pqp ALL /
+		${CMAKE_CURRENT_BINARY_DIR}/simage/simage-prefix/src/simage-build simage ALL /
+		${CMAKE_CURRENT_BINARY_DIR}/solid3/solid3-prefix/src/solid3-build solid3 ALL /
+		${CMAKE_CURRENT_BINARY_DIR}/soqt/soqt-prefix/src/soqt-build soqt ALL /
+		${CMAKE_CURRENT_BINARY_DIR}/xz/xz-prefix/src/xz-build xz ALL /
+		${CMAKE_CURRENT_BINARY_DIR}/zlib/zlib-prefix/src/zlib-build zlib ALL /
+	)
+endif()
 
-set(
-	CPACK_INSTALLED_DIRECTORIES
-	${CMAKE_CURRENT_BINARY_DIR}/boost/boost-prefix/src/boost/boost ${CMAKE_INSTALL_INCLUDEDIR}/boost
-)
+if(NOT DEFINED CPACK_INSTALLED_DIRECTORIES)
+	set(
+		CPACK_INSTALLED_DIRECTORIES
+		${CMAKE_CURRENT_BINARY_DIR}/boost/boost-prefix/src/boost/boost ${CMAKE_INSTALL_INCLUDEDIR}/boost
+	)
+endif()
 
 if(MSVC)
 	if(CMAKE_CXX_COMPILER_VERSION MATCHES "^([0-9]+)\\.([0-9])([0-9]*)\\.([0-9]+)\\.")
@@ -69,15 +73,14 @@ if(MSVC)
 		set(PLATFORM_TOOLSET_MINOR ${CMAKE_MATCH_2})
 		set(LINKER_VERSION "${LINKER_VERSION_MAJOR}.${CMAKE_MATCH_2}${CMAKE_MATCH_3}.${CMAKE_MATCH_4}")
 	endif()
-	if(CMAKE_CL_64)
-		set(CPACK_PACKAGE_FILE_NAME "rl-3rdparty-msvc-${PLATFORM_TOOLSET_MAJOR}.${PLATFORM_TOOLSET_MINOR}-x64")
-		set(CPACK_PACKAGE_INSTALL_DIRECTORY "Robotics Library\\\\3rdparty\\\\MSVC\\\\${PLATFORM_TOOLSET_MAJOR}.${PLATFORM_TOOLSET_MINOR}\\\\x64")
-		set(CPACK_PACKAGE_NAME "Robotics Library Third-Party Dependencies - MSVC ${PLATFORM_TOOLSET_MAJOR}.${PLATFORM_TOOLSET_MINOR} (x64)")
+	if(CMAKE_SIZEOF_VOID_P EQUAL 4)
+		set(ARCHITECTURE "x86")
 	else()
-		set(CPACK_PACKAGE_FILE_NAME "rl-3rdparty-msvc-${PLATFORM_TOOLSET_MAJOR}.${PLATFORM_TOOLSET_MINOR}-x86")
-		set(CPACK_PACKAGE_INSTALL_DIRECTORY "Robotics Library\\\\3rdparty\\\\MSVC\\\\${PLATFORM_TOOLSET_MAJOR}.${PLATFORM_TOOLSET_MINOR}\\\\x86")
-		set(CPACK_PACKAGE_NAME "Robotics Library Third-Party Dependencies - MSVC ${PLATFORM_TOOLSET_MAJOR}.${PLATFORM_TOOLSET_MINOR} (x86)")
+		set(ARCHITECTURE "x64")
 	endif()
+	set(CPACK_PACKAGE_FILE_NAME "rl-3rdparty-msvc-${PLATFORM_TOOLSET_MAJOR}.${PLATFORM_TOOLSET_MINOR}-${ARCHITECTURE}")
+	set(CPACK_PACKAGE_INSTALL_DIRECTORY "Robotics Library\\\\3rdparty\\\\MSVC\\\\${PLATFORM_TOOLSET_MAJOR}.${PLATFORM_TOOLSET_MINOR}\\\\${ARCHITECTURE}")
+	set(CPACK_PACKAGE_NAME "Robotics Library Third-Party Dependencies - MSVC ${PLATFORM_TOOLSET_MAJOR}.${PLATFORM_TOOLSET_MINOR} (${ARCHITECTURE})")
 else()
 	set(CPACK_PACKAGE_FILE_NAME "rl-3rdparty-${CMAKE_SYSTEM_NAME}")
 	set(CPACK_PACKAGE_INSTALL_DIRECTORY "rl-3rdparty")

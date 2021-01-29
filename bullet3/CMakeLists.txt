@@ -25,7 +25,7 @@ ExternalProject_Add(
 )
 
 ExternalProject_Add_Step(
-	bullet3 license
-	DEPENDEES build
-	COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/LICENSE.txt ${CMAKE_INSTALL_FULL_DATADIR}/bullet/LICENSE.txt
+	bullet3 install-licenses
+	DEPENDEES install
+	COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/LICENSE.txt ${CMAKE_INSTALL_FULL_DATADIR}/licenses/bullet/LICENSE.txt
 )

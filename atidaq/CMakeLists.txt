@@ -16,7 +16,7 @@ ExternalProject_Add(
 )
 
 ExternalProject_Add_Step(
-	atidaq license
-	DEPENDEES build
-	COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/readme.txt ${CMAKE_INSTALL_FULL_DATADIR}/atidaq/readme.txt
+	atidaq install-licenses
+	DEPENDEES install
+	COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/readme.txt ${CMAKE_INSTALL_FULL_DATADIR}/licenses/atidaq/readme.txt
 )

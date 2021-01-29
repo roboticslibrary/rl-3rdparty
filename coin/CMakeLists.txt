@@ -19,7 +19,7 @@ ExternalProject_Add(
 )
 
 ExternalProject_Add_Step(
-	coin license
-	DEPENDEES build
-	COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/COPYING ${CMAKE_INSTALL_FULL_DATADIR}/Coin/COPYING
+	coin install-licenses
+	DEPENDEES install
+	COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/COPYING ${CMAKE_INSTALL_FULL_DATADIR}/licenses/coin/COPYING
 )

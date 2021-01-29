@@ -15,7 +15,7 @@ ExternalProject_Add(
 )
 
 ExternalProject_Add_Step(
-	pqp license
-	DEPENDEES build
-	COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/LICENSE ${CMAKE_INSTALL_FULL_DATADIR}/pqp/LICENSE
+	pqp install-licenses
+	DEPENDEES install
+	COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/LICENSE ${CMAKE_INSTALL_FULL_DATADIR}/licenses/pqp/LICENSE
 )
