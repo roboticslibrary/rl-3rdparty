@@ -1,10 +1,10 @@
 ExternalProject_Add(
 	xz
 	#GIT_REPOSITORY https://git.tukaani.org/xz.git
-	#GIT_TAG 90457dbe3e5717660f5b81f8c604860fc5137c0c
-	URL https://github.com/roboticslibrary/xz/archive/90457dbe3e5717660f5b81f8c604860fc5137c0c.tar.gz
-	#URL ${CMAKE_CURRENT_SOURCE_DIR}/xz-90457dbe3e5717660f5b81f8c604860fc5137c0c.tar.gz
-	URL_MD5 d6db20de0d42be75505a4c179b611101
+	#GIT_TAG e7da44d5151e21f153925781ad29334ae0786101
+	URL https://github.com/roboticslibrary/xz/archive/e7da44d5151e21f153925781ad29334ae0786101.tar.gz
+	#URL ${CMAKE_CURRENT_SOURCE_DIR}/xz-e7da44d5151e21f153925781ad29334ae0786101.tar.gz
+	URL_MD5 47bd29b2e41878139b7a8ee3a9ae1f8f
 	CMAKE_ARGS
 		-DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
 		-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
@@ -23,13 +23,4 @@ ExternalProject_Add_Step(
 	COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/COPYING.GPLv2 ${CMAKE_INSTALL_FULL_DATADIR}/licenses/xz/COPYING.GPLv2
 	COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/COPYING.GPLv3 ${CMAKE_INSTALL_FULL_DATADIR}/licenses/xz/COPYING.GPLv3
 	COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/COPYING.LGPLv2.1 ${CMAKE_INSTALL_FULL_DATADIR}/licenses/xz/COPYING.LGPLv2.1
-)
-
-ExternalProject_Add_Step(
-	xz patch-cmake-config
-	DEPENDEES install
-	COMMAND ${CMAKE_COMMAND} -E rename ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/liblzma/liblzmaConfig.cmake ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/liblzma/liblzma-config.cmake
-	COMMAND ${CMAKE_COMMAND} -E echo "add_library(LibLZMA::LibLZMA INTERFACE IMPORTED)" >> ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/liblzma/liblzma-config.cmake
-	COMMAND ${CMAKE_COMMAND} -E echo "set_target_properties(LibLZMA::LibLZMA PROPERTIES INTERFACE_LINK_LIBRARIES liblzma::liblzma)" >> ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/liblzma/liblzma-config.cmake
-	COMMAND ${CMAKE_COMMAND} -E rename ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/liblzma/liblzmaConfigVersion.cmake ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/liblzma/liblzma-config-version.cmake
 )
