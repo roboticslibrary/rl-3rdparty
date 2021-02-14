@@ -13,11 +13,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+      - name: Enable Developer Command Prompt
+        uses: ilammy/msvc-dev-cmd@v1.5.0
       - name: Cache Qt
         id: cache-qt
         uses: actions/cache@v2
         with:
-          path: ${{ runner.workspace }}\Qt
+          path: ${{ runner.workspace }}/Qt
           key: ${{ runner.os }}-${{ env.CMAKE_GENERATOR_TOOLSET }}-${{ env.CMAKE_GENERATOR_PLATFORM }}-qtbase-qtsvg
       - name: Install Qt
         uses: jurplel/install-qt-action@v2
@@ -42,47 +44,35 @@ jobs:
           7z e qt.license.win10sdk.7z -o"$Env:Qt5_DIR\share\licenses\qt" qt.license.win10sdk\*
       - name: Update environment variables
         run: |
-            Write-Output "CMAKE_PREFIX_PATH=$Env:Qt5_DIR" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
-            $VSWHERE_INSTALLATION_PATH = & "${Env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -property installationPath
-            Write-Output "VSWHERE_INSTALLATION_PATH=$VSWHERE_INSTALLATION_PATH" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
-            $VSWHERE_INSTANCE_ID = & "${Env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -property instanceId
-            Write-Output "VSWHERE_INSTANCE_ID=$VSWHERE_INSTANCE_ID" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
-            Write-Output "${{ runner.workspace }}\rl-3rdparty-install\bin" | Out-File -FilePath $Env:GITHUB_PATH -Encoding utf8 -Append
+          Write-Output "CMAKE_PREFIX_PATH=$Env:Qt5_DIR" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+          Write-Output "${{ runner.workspace }}\rl-3rdparty-install\bin" | Out-File -FilePath $Env:GITHUB_PATH -Encoding utf8 -Append
       - name: Configure CMake
-        run: |
-          Import-Module "$Env:VSWHERE_INSTALLATION_PATH\Common7\Tools\Microsoft.VisualStudio.DevShell.dll"
-          Enter-VsDevShell $Env:VSWHERE_INSTANCE_ID -DevCmdArguments "-arch=x64"
-          cmake `
-            -G "Ninja Multi-Config" `
-            -D CPACK_INSTALL_CMAKE_PROJECTS="" `
-            -D CMAKE_INSTALL_PREFIX="${{ runner.workspace }}\rl-3rdparty-install" `
-            -D CPACK_INSTALLED_DIRECTORIES="$Env:Qt5_DIR;.;$($Env:RUNNER_WORKSPACE.Replace('\', '/'))/rl-3rdparty-install;." `
-            -D CPACK_MONOLITHIC_INSTALL=ON `
-            -S "${{ github.workspace }}" `
-            -B "${{ runner.workspace }}\rl-3rdparty-build"
+        run: >
+          cmake
+          -G"Ninja Multi-Config"
+          -DCPACK_INSTALL_CMAKE_PROJECTS=""
+          -DCMAKE_INSTALL_PREFIX="${{ runner.workspace }}\rl-3rdparty-install"
+          -DCPACK_INSTALLED_DIRECTORIES="$Env:Qt5_DIR;.;$($Env:RUNNER_WORKSPACE.Replace('\', '/'))/rl-3rdparty-install;."
+          -DCPACK_MONOLITHIC_INSTALL=ON
+          -S"${{ github.workspace }}"
+          -B"${{ runner.workspace }}\rl-3rdparty-build"
       - name: Build Debug
-        working-directory: ${{ runner.workspace }}\rl-3rdparty-build
-        run: |
-          Import-Module "$Env:VSWHERE_INSTALLATION_PATH\Common7\Tools\Microsoft.VisualStudio.DevShell.dll"
-          Enter-VsDevShell $Env:VSWHERE_INSTANCE_ID -DevCmdArguments "-arch=x64"
-          cmake --build . --config Debug
+        working-directory: ${{ runner.workspace }}/rl-3rdparty-build
+        run: cmake --build . --config Debug
       - name: Build Release
-        working-directory: ${{ runner.workspace }}\rl-3rdparty-build
-        run: |
-          Import-Module "$Env:VSWHERE_INSTALLATION_PATH\Common7\Tools\Microsoft.VisualStudio.DevShell.dll"
-          Enter-VsDevShell $Env:VSWHERE_INSTANCE_ID -DevCmdArguments "-arch=x64"
-          cmake --build . --config Release
+        working-directory: ${{ runner.workspace }}/rl-3rdparty-build
+        run: cmake --build . --config Release
       - name: Create archive
-        working-directory: ${{ runner.workspace }}\rl-3rdparty-build
+        working-directory: ${{ runner.workspace }}/rl-3rdparty-build
         run: cpack -G 7Z
       - name: Create installer
-        working-directory: ${{ runner.workspace }}\rl-3rdparty-build
+        working-directory: ${{ runner.workspace }}/rl-3rdparty-build
         run: cpack -G WIX
       - if: ${{ github.event_name == 'push' }}
         name: Upload archive
         uses: svenstaro/upload-release-action@v2
         with:
-          file: ${{ runner.workspace }}\rl-3rdparty-build\rl-3rdparty-*.7z
+          file: ${{ runner.workspace }}/rl-3rdparty-build/rl-3rdparty-*.7z
           file_glob: true
           overwrite: true
           prerelease: true
@@ -92,7 +82,7 @@ jobs:
         name: Upload installer
         uses: svenstaro/upload-release-action@v2
         with:
-          file: ${{ runner.workspace }}\rl-3rdparty-build\rl-3rdparty-*.msi
+          file: ${{ runner.workspace }}/rl-3rdparty-build/rl-3rdparty-*.msi
           file_glob: true
           overwrite: true
           prerelease: true
