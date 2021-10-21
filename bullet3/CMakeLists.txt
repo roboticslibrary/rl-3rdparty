@@ -1,10 +1,10 @@
 ExternalProject_Add(
 	bullet3
 	#GIT_REPOSITORY https://github.com/bulletphysics/bullet3.git
-	#GIT_TAG 3.06
-	URL https://github.com/bulletphysics/bullet3/archive/3.06.tar.gz
-	#URL ${CMAKE_CURRENT_SOURCE_DIR}/bullet3-3.06.tar.gz
-	URL_MD5 369407bb68a2d8898789a280acb067ac
+	#GIT_TAG 3.17
+	URL https://github.com/bulletphysics/bullet3/archive/refs/tags/3.17.tar.gz
+	#URL ${CMAKE_CURRENT_SOURCE_DIR}/bullet3-3.17.tar.gz
+	URL_MD5 7711bce9a49c289a08ecda34eaa0f32e
 	CMAKE_ARGS
 		-DBUILD_BULLET2_DEMOS=OFF
 		-DBUILD_CPU_DEMOS=OFF
