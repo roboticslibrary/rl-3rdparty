@@ -2,10 +2,10 @@ ExternalProject_Add(
 	libxslt
 	DEPENDS libxml2
 	#GIT_REPOSITORY https://gitlab.gnome.org/GNOME/libxslt.git
-	#GIT_TAG 9d4facb122fc18a1cfb68a33d7f6f17819c3f555
-	URL https://gitlab.gnome.org/GNOME/libxslt/-/archive/9d4facb122fc18a1cfb68a33d7f6f17819c3f555/libxslt-9d4facb122fc18a1cfb68a33d7f6f17819c3f555.tar.gz
-	#URL ${CMAKE_CURRENT_SOURCE_DIR}/libxslt-9d4facb122fc18a1cfb68a33d7f6f17819c3f555.tar.gz
-	URL_MD5 b0db06c21368ee80bc58c60f924c3b9c
+	#GIT_TAG 50f9c9cd3b7dfe9b3c8c795247752d1fdcadcac8
+	URL https://gitlab.gnome.org/GNOME/libxslt/-/archive/50f9c9cd3b7dfe9b3c8c795247752d1fdcadcac8/libxslt-50f9c9cd3b7dfe9b3c8c795247752d1fdcadcac8.tar.gz
+	#URL ${CMAKE_CURRENT_SOURCE_DIR}/libxslt-50f9c9cd3b7dfe9b3c8c795247752d1fdcadcac8.tar.gz
+	URL_MD5 4e5f79fcef97c966ccc18dd69870e3f3
 	CMAKE_ARGS
 		-DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
 		-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
@@ -15,6 +15,7 @@ ExternalProject_Add(
 		-DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}
 		-DCMAKE_TRY_COMPILE_CONFIGURATION=${CMAKE_TRY_COMPILE_CONFIGURATION}
 		-DLIBXSLT_WITH_PYTHON=OFF
+		-DLIBXSLT_WITH_TESTS=OFF
 	INSTALL_DIR ${CMAKE_INSTALL_PREFIX}
 )
 
