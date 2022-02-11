@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: windows-latest
+    runs-on: windows-2019
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -51,11 +51,11 @@ jobs:
           cmake
           -G"Ninja Multi-Config"
           -DCPACK_INSTALL_CMAKE_PROJECTS=""
-          -DCMAKE_INSTALL_PREFIX="${{ runner.workspace }}\rl-3rdparty-install"
+          -DCMAKE_INSTALL_PREFIX="${{ runner.workspace }}/rl-3rdparty-install"
           -DCPACK_INSTALLED_DIRECTORIES="$Env:Qt5_DIR;.;$($Env:RUNNER_WORKSPACE.Replace('\', '/'))/rl-3rdparty-install;."
           -DCPACK_MONOLITHIC_INSTALL=ON
           -S"${{ github.workspace }}"
-          -B"${{ runner.workspace }}\rl-3rdparty-build"
+          -B"${{ runner.workspace }}/rl-3rdparty-build"
       - name: Build Debug
         working-directory: ${{ runner.workspace }}/rl-3rdparty-build
         run: cmake --build . --config Debug
