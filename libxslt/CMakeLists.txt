@@ -2,10 +2,10 @@ ExternalProject_Add(
 	libxslt
 	DEPENDS libxml2
 	#GIT_REPOSITORY https://gitlab.gnome.org/GNOME/libxslt.git
-	#GIT_TAG 50f9c9cd3b7dfe9b3c8c795247752d1fdcadcac8
-	URL https://gitlab.gnome.org/GNOME/libxslt/-/archive/50f9c9cd3b7dfe9b3c8c795247752d1fdcadcac8/libxslt-50f9c9cd3b7dfe9b3c8c795247752d1fdcadcac8.tar.gz
-	#URL ${CMAKE_CURRENT_SOURCE_DIR}/libxslt-50f9c9cd3b7dfe9b3c8c795247752d1fdcadcac8.tar.gz
-	URL_MD5 4e5f79fcef97c966ccc18dd69870e3f3
+	#GIT_TAG v1.1.35
+	URL https://gitlab.gnome.org/GNOME/libxslt/-/archive/v1.1.35/libxslt-v1.1.35.tar.gz
+	#URL ${CMAKE_CURRENT_SOURCE_DIR}/libxslt-v1.1.35.tar.gz
+	URL_MD5 49c0249ea013c03e10a6dbda5abf1f30
 	CMAKE_ARGS
 		-DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
 		-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
