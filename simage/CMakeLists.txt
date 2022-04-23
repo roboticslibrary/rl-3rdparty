@@ -1,10 +1,10 @@
 ExternalProject_Add(
 	simage
 	#GIT_REPOSITORY https://github.com/coin3d/simage.git
-	#GIT_TAG v1.8.2
-	URL https://github.com/coin3d/simage/releases/download/v1.8.2/simage-1.8.2-src.tar.gz
-	#URL ${CMAKE_CURRENT_SOURCE_DIR}/simage-1.8.2-src.tar.gzn
-	URL_MD5 fd6cece0a05081dae89852af499cb031
+	#GIT_TAG v1.8.3
+	URL https://github.com/coin3d/simage/releases/download/v1.8.3/simage-1.8.3-src.tar.gz
+	#URL ${CMAKE_CURRENT_SOURCE_DIR}/simage-1.8.3-src.tar.gz
+	URL_MD5 af4faec8a7881937cc6b4440e45405bf
 	CMAKE_ARGS
 		-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
 		-DCMAKE_CFG_INTDIR=${CMAKE_CFG_INTDIR}
