@@ -12,12 +12,12 @@ jobs:
     runs-on: windows-2019
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Enable Developer Command Prompt
         uses: ilammy/msvc-dev-cmd@v1
       - name: Cache Qt
         id: cache-qt
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ runner.workspace }}/Qt
           key: ${{ runner.os }}-${{ env.CMAKE_GENERATOR_TOOLSET }}-${{ env.CMAKE_GENERATOR_PLATFORM }}-qtbase-qtsvg
