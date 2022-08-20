@@ -1,10 +1,10 @@
 ExternalProject_Add(
 	xz
 	#GIT_REPOSITORY https://git.tukaani.org/xz.git
-	#GIT_TAG e7da44d5151e21f153925781ad29334ae0786101
-	URL https://github.com/roboticslibrary/xz/archive/e7da44d5151e21f153925781ad29334ae0786101.tar.gz
-	#URL ${CMAKE_CURRENT_SOURCE_DIR}/xz-e7da44d5151e21f153925781ad29334ae0786101.tar.gz
-	URL_MD5 47bd29b2e41878139b7a8ee3a9ae1f8f
+	#GIT_TAG v5.2.6
+	URL https://github.com/roboticslibrary/xz/archive/refs/tags/v5.2.6.tar.gz
+	#URL ${CMAKE_CURRENT_SOURCE_DIR}/xz-5.2.6.tar.gz
+	URL_MD5 e52e453b8f7f475c7fe7104be2fcbf03
 	CMAKE_ARGS
 		-DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
 		-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
