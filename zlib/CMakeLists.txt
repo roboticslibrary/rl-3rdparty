@@ -1,10 +1,10 @@
 ExternalProject_Add(
 	zlib
 	#GIT_REPOSITORY https://github.com/roboticslibrary/zlib.git
-	#GIT_TAG cmake-1.2.12
-	URL https://github.com/roboticslibrary/zlib/archive/cmake-1.2.12.tar.gz
-	#URL ${CMAKE_CURRENT_SOURCE_DIR}/zlib-cmake-1.2.12.tar.gz
-	URL_MD5 da91835f8563a19f598e37fafed46746
+	#GIT_TAG cmake-1.2.13
+	URL https://github.com/roboticslibrary/zlib/archive/cmake-1.2.13.tar.gz
+	#URL ${CMAKE_CURRENT_SOURCE_DIR}/zlib-cmake-1.2.13.tar.gz
+	URL_MD5 df2a2165128bf4f9ff5e2e1c07c018f2
 	CMAKE_ARGS
 		-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
 		-DCMAKE_CFG_INTDIR=${CMAKE_CFG_INTDIR}
@@ -17,5 +17,5 @@ ExternalProject_Add(
 ExternalProject_Add_Step(
 	zlib install-licenses
 	DEPENDEES install
-	COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/README ${CMAKE_INSTALL_FULL_DATADIR}/licenses/zlib/README
+	COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/LICENSE ${CMAKE_INSTALL_FULL_DATADIR}/licenses/zlib/LICENSE
 )
