@@ -1,6 +1,14 @@
+if(TARGET superglu AND MSVC)
+	set(DEPENDS superglu)
+	set(USE_SUPERGLU ON)
+else()
+	unset(DEPENDS)
+	set(USE_SUPERGLU OFF)
+endif()
+
 ExternalProject_Add(
 	coin
-	DEPENDS boost
+	DEPENDS boost ${DEPENDS}
 	#GIT_REPOSITORY https://github.com/coin3d/coin.git
 	#GIT_TAG Coin-4.0.0
 	URL https://github.com/coin3d/coin/releases/download/Coin-4.0.0/coin-4.0.0-src.tar.gz
@@ -15,6 +23,7 @@ ExternalProject_Add(
 		-DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
 		-DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}
 		-DCMAKE_TRY_COMPILE_CONFIGURATION=${CMAKE_TRY_COMPILE_CONFIGURATION}
+		-DUSE_SUPERGLU=${USE_SUPERGLU}
 	INSTALL_DIR ${CMAKE_INSTALL_PREFIX}
 )
 

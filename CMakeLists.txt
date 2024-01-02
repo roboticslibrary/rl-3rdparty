@@ -9,6 +9,12 @@ option(BUILD_SHARED_LIBS "Build shared libraries" ON)
 
 list(INSERT CMAKE_PREFIX_PATH 0 ${CMAKE_INSTALL_PREFIX})
 
+find_package(Perl)
+
+if(Perl_FOUND)
+	add_subdirectory(superglu)
+endif()
+
 add_subdirectory(atidaq)
 add_subdirectory(boost)
 add_subdirectory(bullet3)
@@ -53,6 +59,12 @@ if(NOT DEFINED CPACK_INSTALL_CMAKE_PROJECTS)
 		${CMAKE_CURRENT_BINARY_DIR}/xz/xz-prefix/src/xz-build xz ALL /
 		${CMAKE_CURRENT_BINARY_DIR}/zlib/zlib-prefix/src/zlib-build zlib ALL /
 	)
+	if(Perl_FOUND)
+		list(
+			APPEND CPACK_INSTALL_CMAKE_PROJECTS
+			${CMAKE_CURRENT_BINARY_DIR}/superglu/superglu-prefix/src/superglu-build superglu ALL /
+		)
+	endif()
 endif()
 
 if(NOT DEFINED CPACK_INSTALLED_DIRECTORIES)
