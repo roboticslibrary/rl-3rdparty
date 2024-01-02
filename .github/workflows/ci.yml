@@ -6,53 +6,68 @@ on:
   pull_request:
     branches:
       - master
+  workflow_dispatch:
 jobs:
   build:
     name: Build
-    runs-on: windows-2019
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - windows-2019
+          - windows-2022
+        qt:
+          - 5.15.2
+          - 6.5.3
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Enable Developer Command Prompt
         uses: ilammy/msvc-dev-cmd@v1
-      - name: Cache Qt
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          archives: qtbase qtsvg
+          cache: true
+          extra: --external 7z
+          tools: tools_opensslv3_x64
+          version: ${{ matrix.qt }}
+      - name: Update environment variables
+        run: |
+          $QT_ROOT_DIR=(Get-Item Env:Qt$("${{ matrix.qt }}".Split(".")[0])_DIR).value
+          Write-Output "QT_ROOT_DIR=$QT_ROOT_DIR" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+          Write-Output "CMAKE_PREFIX_PATH=$QT_ROOT_DIR" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+          Write-Output "${{ runner.workspace }}\rl-3rdparty-install\bin" | Out-File -FilePath $Env:GITHUB_PATH -Encoding utf8 -Append
+      - name: Cache Qt licences
         id: cache-qt
         uses: actions/cache@v3
         with:
-          path: ${{ runner.workspace }}/Qt
-          key: ${{ runner.os }}-${{ env.CMAKE_GENERATOR_TOOLSET }}-${{ env.CMAKE_GENERATOR_PLATFORM }}-qtbase-qtsvg
-      - name: Install Qt
-        uses: jurplel/install-qt-action@v2
-        with:
-          arch: win64_msvc2019_64
-          cached: ${{ steps.cache-qt.outputs.cache-hit }}
-          extra: --external 7z --archives qtbase qtsvg
-          version: 5.15.2
+          path: ${{ runner.workspace }}/Qt/Licenses
+          key: ${{ matrix.qt }}
       - if: ${{ steps.cache-qt.outputs.cache-hit != 'true' }}
         name: Install Qt licenses
         working-directory: ${{ runner.workspace }}
         run: |
-          curl.exe -L https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/licenses/qt.license.gplv3except/1.0.0-1meta.7z -o qt.license.gplv3except.7z
-          7z e qt.license.gplv3except.7z -o"$Env:Qt5_DIR\share\licenses\qt" qt.license.gplv3except\*
-          curl.exe -L https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/licenses/qt.license.lgpl/1.0.2meta.7z -o qt.license.lgpl.7z
-          7z e qt.license.lgpl.7z -o"$Env:Qt5_DIR\share\licenses\qt" qt.license.lgpl\*
-          curl.exe -L https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/licenses/qt.license.python/2meta.7z -o qt.license.python.7z
-          7z e qt.license.python.7z -o"$Env:Qt5_DIR\share\licenses\qt" qt.license.python\*
-          curl.exe -L https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/licenses/qt.license.thirdparty/1.0.0ThirdPartySoftware_Listing.7z -o qt.license.thirdparty.7z
-          7z e qt.license.thirdparty.7z -o"$Env:Qt5_DIR\share\licenses\qt" Licenses\*
-          curl.exe -L https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/licenses/qt.license.win10sdk/1.0.0meta.7z -o qt.license.win10sdk.7z
-          7z e qt.license.win10sdk.7z -o"$Env:Qt5_DIR\share\licenses\qt" qt.license.win10sdk\*
-      - name: Update environment variables
-        run: |
-          Write-Output "CMAKE_PREFIX_PATH=$Env:Qt5_DIR" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
-          Write-Output "${{ runner.workspace }}\rl-3rdparty-install\bin" | Out-File -FilePath $Env:GITHUB_PATH -Encoding utf8 -Append
+          curl -L https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/licenses/qt.license.gplv3except/1.0.0-1meta.7z -o qt.license.gplv3except.7z
+          7z e qt.license.gplv3except.7z -o"${{ runner.workspace }}\Qt\Licenses" qt.license.gplv3except\*
+          curl -L https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/licenses/qt.license.lgpl/1.0.2meta.7z -o qt.license.lgpl.7z
+          7z e qt.license.lgpl.7z -o"${{ runner.workspace }}\Qt\Licenses" qt.license.lgpl\*
+          curl -L https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/licenses/qt.license.python/2meta.7z -o qt.license.python.7z
+          7z e qt.license.python.7z -o"${{ runner.workspace }}\Qt\Licenses" qt.license.python\*
+          curl -L https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/licenses/qt.license.thirdparty/1.0.0fdl_license.7z -o 1.0.0fdl_license.7z
+          7z e 1.0.0fdl_license.7z -o"${{ runner.workspace }}\Qt\Licenses" Licenses\*
+          curl -L https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/licenses/qt.license.thirdparty/1.0.0ThirdPartySoftware_Listing.7z -o qt.license.thirdparty.7z
+          7z e qt.license.thirdparty.7z -o"${{ runner.workspace }}\Qt\Licenses" Licenses\*
+          curl -L https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/licenses/qt.license.win10sdk/1.0.0meta.7z -o qt.license.win10sdk.7z
+          7z e qt.license.win10sdk.7z -o"${{ runner.workspace }}\Qt\Licenses" qt.license.win10sdk\*
       - name: Configure CMake
         run: >
           cmake
           -G"Ninja Multi-Config"
           -DCPACK_INSTALL_CMAKE_PROJECTS=""
           -DCMAKE_INSTALL_PREFIX="${{ runner.workspace }}/rl-3rdparty-install"
-          -DCPACK_INSTALLED_DIRECTORIES="$Env:Qt5_DIR;.;$($Env:RUNNER_WORKSPACE.Replace('\', '/'))/rl-3rdparty-install;."
+          -DCPACK_INSTALLED_DIRECTORIES="${{ runner.workspace }}/Qt/Licenses;share/licenses/qt;${{ runner.workspace }}/Qt/Tools/OpenSSLv3/Win_x64;.;$Env:QT_ROOT_DIR;.;${{ runner.workspace }}/rl-3rdparty-install;."
           -DCPACK_MONOLITHIC_INSTALL=ON
           -S"${{ github.workspace }}"
           -B"${{ runner.workspace }}/rl-3rdparty-build"
@@ -65,24 +80,11 @@ jobs:
       - name: Create archive
         working-directory: ${{ runner.workspace }}/rl-3rdparty-build
         run: cpack -G 7Z
-      - name: Create installer
-        working-directory: ${{ runner.workspace }}/rl-3rdparty-build
-        run: cpack -G WIX
       - if: ${{ github.event_name == 'push' }}
         name: Upload archive
         uses: svenstaro/upload-release-action@v2
         with:
-          file: ${{ runner.workspace }}/rl-3rdparty-build/rl-3rdparty-*.7z
-          file_glob: true
-          overwrite: true
-          prerelease: true
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          tag: latest
-      - if: ${{ github.event_name == 'push' }}
-        name: Upload installer
-        uses: svenstaro/upload-release-action@v2
-        with:
-          file: ${{ runner.workspace }}/rl-3rdparty-build/rl-3rdparty-*.msi
+          file: ../rl-3rdparty-build/rl-3rdparty-*.7z
           file_glob: true
           overwrite: true
           prerelease: true
