@@ -1,10 +1,10 @@
 ExternalProject_Add(
 	xz
-	#GIT_REPOSITORY https://git.tukaani.org/xz.git
-	#GIT_TAG v5.2.8
-	URL https://tukaani.org/xz/xz-5.2.8.tar.gz
-	#URL ${CMAKE_CURRENT_SOURCE_DIR}/xz-5.2.8.tar.gz
-	URL_MD5 8044682ee4a818a95302914b16ec37c5
+	#GIT_REPOSITORY https://github.com/tukaani-project/xz.git
+	#GIT_TAG v5.4.5
+	URL https://github.com/tukaani-project/xz/releases/download/v5.4.5/xz-5.4.5.tar.gz
+	#URL ${CMAKE_CURRENT_SOURCE_DIR}/xz-5.4.5.tar.gz
+	URL_MD5 d2bb81e1a1a7808352c4ca28622f5c72
 	CMAKE_ARGS
 		-DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
 		-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
