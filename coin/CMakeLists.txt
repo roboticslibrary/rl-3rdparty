@@ -10,10 +10,10 @@ ExternalProject_Add(
 	coin
 	DEPENDS boost ${DEPENDS}
 	#GIT_REPOSITORY https://github.com/coin3d/coin.git
-	#GIT_TAG Coin-4.0.2
-	URL https://github.com/coin3d/coin/releases/download/v4.0.2/coin-4.0.2-src.tar.gz
-	#URL ${CMAKE_CURRENT_SOURCE_DIR}/coin-4.0.2-src.tar.gz
-	URL_MD5 1dd89262e2e9e44a046e803515387bdf
+	#GIT_TAG Coin-4.0.3
+	URL https://github.com/coin3d/coin/releases/download/v4.0.3/coin-4.0.3-src.tar.gz
+	#URL ${CMAKE_CURRENT_SOURCE_DIR}/coin-4.0.3-src.tar.gz
+	URL_MD5 4fc4be9ec20436c25f81298519764d4e
 	CMAKE_ARGS
 		-DCOIN_BUILD_DOCUMENTATION=OFF
 		-DCOIN_BUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
