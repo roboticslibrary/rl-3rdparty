@@ -62,6 +62,7 @@ if(NOT DEFINED CPACK_INSTALL_CMAKE_PROJECTS)
 	set(
 		CPACK_INSTALL_CMAKE_PROJECTS
 		${CMAKE_CURRENT_BINARY_DIR}/atidaq/atidaq-prefix/src/atidaq-build atidaq ALL /
+		${CMAKE_CURRENT_BINARY_DIR}/boost/boost-prefix/src/boost-build boost ALL /
 		${CMAKE_CURRENT_BINARY_DIR}/bullet3/bullet3-prefix/src/bullet3-build bullet3 ALL /
 		${CMAKE_CURRENT_BINARY_DIR}/coin/coin-prefix/src/coin-build coin ALL /
 		${CMAKE_CURRENT_BINARY_DIR}/eigen3/eigen3-prefix/src/eigen3-build eigen3 ALL /
@@ -88,13 +89,6 @@ if(NOT DEFINED CPACK_INSTALL_CMAKE_PROJECTS)
 			${CMAKE_CURRENT_BINARY_DIR}/soqt/soqt-prefix/src/soqt-build soqt ALL /
 		)
 	endif()
-endif()
-
-if(NOT DEFINED CPACK_INSTALLED_DIRECTORIES)
-	set(
-		CPACK_INSTALLED_DIRECTORIES
-		${CMAKE_CURRENT_BINARY_DIR}/boost/boost-prefix/src/boost/boost ${CMAKE_INSTALL_INCLUDEDIR}/boost
-	)
 endif()
 
 file(TO_CMAKE_PATH "${CPACK_INSTALLED_DIRECTORIES}" CPACK_INSTALLED_DIRECTORIES)

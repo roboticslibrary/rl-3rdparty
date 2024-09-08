@@ -1,14 +1,16 @@
 ExternalProject_Add(
 	boost
-	URL
-		https://sourceforge.net/projects/boost/files/boost/1.84.0/boost_1_84_0.7z/download
-		https://boostorg.jfrog.io/artifactory/main/release/1.84.0/source/boost_1_84_0.7z
-	#URL ${CMAKE_CURRENT_SOURCE_DIR}/boost_1_84_0.7z
-	URL_MD5 540062a1e7573bb26768e50c20e7e5c7
-	CONFIGURE_COMMAND ""
-	BUILD_COMMAND ""
-	BUILD_IN_SOURCE 1
-	INSTALL_COMMAND ${CMAKE_COMMAND} -E copy_directory <SOURCE_DIR>/boost ${CMAKE_INSTALL_FULL_INCLUDEDIR}/boost
+	URL https://github.com/boostorg/boost/releases/download/boost-1.86.0/boost-1.86.0-cmake.7z
+	#URL ${CMAKE_CURRENT_SOURCE_DIR}/boost-1.86.0-cmake.7z
+	URL_MD5 c33bf9137ff5ff1d3d0f28af212c9704
+	CMAKE_ARGS
+		-DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
+		-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+		-DCMAKE_CFG_INTDIR=${CMAKE_CFG_INTDIR}
+		-DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
+		-DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}
+		-DCMAKE_TRY_COMPILE_CONFIGURATION=${CMAKE_TRY_COMPILE_CONFIGURATION}
+	INSTALL_DIR ${CMAKE_INSTALL_PREFIX}
 )
 
 ExternalProject_Add_Step(
