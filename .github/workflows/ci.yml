@@ -41,7 +41,7 @@ jobs:
           Write-Output "${{ runner.workspace }}\rl-3rdparty-install\bin" | Out-File -FilePath $Env:GITHUB_PATH -Encoding utf8 -Append
       - name: Cache Qt licences
         id: cache-qt
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ runner.workspace }}/Qt/Licenses
           key: ${{ matrix.qt }}
