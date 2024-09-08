@@ -29,8 +29,6 @@ add_subdirectory(ode)
 add_subdirectory(pqp)
 add_subdirectory(simage)
 add_subdirectory(solid3)
-add_subdirectory(xz)
-add_subdirectory(zlib)
 
 add_subdirectory(fcl)
 add_subdirectory(libiconv)
@@ -77,8 +75,6 @@ if(NOT DEFINED CPACK_INSTALL_CMAKE_PROJECTS)
 		${CMAKE_CURRENT_BINARY_DIR}/pqp/pqp-prefix/src/pqp-build pqp ALL /
 		${CMAKE_CURRENT_BINARY_DIR}/simage/simage-prefix/src/simage-build simage ALL /
 		${CMAKE_CURRENT_BINARY_DIR}/solid3/solid3-prefix/src/solid3-build solid3 ALL /
-		${CMAKE_CURRENT_BINARY_DIR}/xz/xz-prefix/src/xz-build xz ALL /
-		${CMAKE_CURRENT_BINARY_DIR}/zlib/zlib-prefix/src/zlib-build zlib ALL /
 	)
 	if(Perl_FOUND)
 		list(
