@@ -26,7 +26,7 @@ jobs:
       - name: Enable Developer Command Prompt
         uses: ilammy/msvc-dev-cmd@v1
       - name: Install Qt
-        uses: jurplel/install-qt-action@v3
+        uses: jurplel/install-qt-action@v4
         with:
           archives: qtbase qtsvg
           cache: true
@@ -35,9 +35,7 @@ jobs:
           version: ${{ matrix.qt }}
       - name: Update environment variables
         run: |
-          $QT_ROOT_DIR=(Get-Item Env:Qt$("${{ matrix.qt }}".Split(".")[0])_DIR).value
-          Write-Output "QT_ROOT_DIR=$QT_ROOT_DIR" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
-          Write-Output "CMAKE_PREFIX_PATH=$QT_ROOT_DIR" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+          Write-Output "CMAKE_PREFIX_PATH=$Env:QT_ROOT_DIR" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
           Write-Output "${{ runner.workspace }}\rl-3rdparty-install\bin" | Out-File -FilePath $Env:GITHUB_PATH -Encoding utf8 -Append
       - name: Cache Qt licences
         id: cache-qt
